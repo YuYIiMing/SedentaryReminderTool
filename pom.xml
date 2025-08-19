@@ -32,6 +32,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>17.0.2</version>
+        </dependency>
         <!-- 音频播放 -->
         <dependency>
             <groupId>javazoom</groupId>
@@ -81,9 +86,9 @@
                             <mainClass>com.demo.Launcher</mainClass>
                             <arguments>
                                 <argument>--module-path</argument>
-                                <argument>${maven.dependency.org.openjfx.javafx-controls.jar.path};${maven.dependency.org.openjfx.javafx-fxml.jar.path}</argument>
+                                <argument>${maven.dependency.org.openjfx.javafx-controls.jar.path};${maven.dependency.org.openjfx.javafx-fxml.jar.path};${maven.dependency.org.openjfx.javafx-graphics.jar.path}</argument>
                                 <argument>--add-modules</argument>
-                                <argument>javafx.controls,javafx.fxml</argument>
+                                <argument>javafx.controls,javafx.fxml,javafx.graphics</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -96,9 +101,9 @@
                             <mainClass>com.demo.TestJavaFX</mainClass>
                             <arguments>
                                 <argument>--module-path</argument>
-                                <argument>${maven.dependency.org.openjfx.javafx-controls.jar.path}</argument>
+                                <argument>${maven.dependency.org.openjfx.javafx-controls.jar.path};${maven.dependency.org.openjfx.javafx-graphics.jar.path}</argument>
                                 <argument>--add-modules</argument>
-                                <argument>javafx.controls</argument>
+                                <argument>javafx.controls,javafx.graphics</argument>
                             </arguments>
                         </configuration>
                     </execution>

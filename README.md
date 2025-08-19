@@ -1,54 +1,92 @@
-# 久坐小管家
+# 久坐提醒工具 (Sedentary Reminder Tool)
 
-一款帮助用户提醒定时休息，预防久坐带来健康问题的桌面应用程序。
+## 项目功能介绍
 
-## 功能特点
-- 自定义提醒间隔和休息时长
-- 视觉和声音提醒
-- 简洁美观的用户界面
-- 支持多种提醒模式
+久坐提醒工具是一个帮助用户避免长时间久坐的桌面应用程序。现代生活中，许多人因工作或学习需要长时间坐在电脑前，这对身体健康有诸多负面影响。本工具通过定时提醒用户起身活动，帮助用户养成健康的工作习惯。
 
-## 环境要求
-- **JDK 11 或更高版本**（必须包含JavaFX支持）
-- **Windows操作系统**
+主要功能包括：
+- 自定义提醒间隔时间（默认为90分钟）
+- 多种提醒方式（弹窗、声音、任务栏闪烁）
+- 提醒内容自定义
+- 休息活动建议
+- 统计每日活动数据
+- 开机自启动选项
 
-## 如何运行应用程序
+## 技术方案
 
-### 方法一：使用批处理脚本（推荐）
-1. 确保已安装符合要求的JDK
-2. 双击运行 `直接运行应用程序.bat` 批处理文件
-3. 应用程序将启动并显示主界面
+### 开发语言与框架
+- **编程语言**：Java 11+
+- **UI框架**：JavaFX
+- **构建工具**：Maven
 
-### 方法二：使用命令行
-打开命令提示符，导航到项目目录，然后执行以下命令：
-```cmd
-java -jar target\sedentary-reminder-1.0-SNAPSHOT-jar-with-dependencies.jar
+### 项目结构
+```
+SedentaryReminderTool/
+├── .vscode/              # VS Code配置文件
+├── installer/            # 安装程序相关文件
+├── output/               # 输出文件
+├── pom.xml               # Maven配置文件
+├── src/
+│   ├── main/
+│   │   ├── java/         # 主源代码
+│   │   └── resources/    # 资源文件
+│   │       ├── css/      # 样式表
+│   │       ├── fxml/     # UI布局文件
+│   │       ├── images/   # 图片资源
+│   │       └── sounds/   # 声音资源
+│   └── test/             # 测试代码
+├── start_sedentary_reminder.bat  # Windows启动脚本
+└── target/               # Maven构建输出目录
 ```
 
-## 常见问题解决
+### 核心技术点
+1. **JavaFX UI设计**：使用FXML和CSS构建现代化用户界面
+2. **定时任务调度**：使用Java的ScheduledExecutorService实现精确计时
+3. **数据持久化**：使用JSON格式保存用户配置和统计数据
+4. **多线程处理**：分离UI线程和后台任务，确保界面响应流畅
+5. **系统集成**：实现任务栏通知、声音播放等系统级功能
 
-### 1. 应用程序启动时出现 "Location is required" 错误
-这通常是JavaFX资源加载问题。我们已经在代码中修复了这个问题，确保使用正确的ClassLoader方式加载FXML文件。
+## 使用说明
 
-### 2. 出现 "Unsupported JavaFX configuration" 警告
-这是Java模块系统与JavaFX的兼容性警告，通常不会影响程序功能。
+### 运行环境要求
+- Java 11 或更高版本
+- Maven 3.6 或更高版本（可选，用于构建）
 
-### 3. 应用程序无法启动或崩溃
-- 确认已安装正确版本的JDK（11或更高版本）
-- 确认JDK包含JavaFX支持
-- 尝试以管理员身份运行批处理脚本
+### 运行方式
 
-## 开发说明
-如果您想参与开发或修改此应用程序：
-1. 使用Maven构建项目：`mvn clean package`
-2. 项目使用JavaFX框架开发UI
-3. 主要源代码位于 `src/main/java/com/demo/` 目录
-4. 资源文件（FXML、CSS、图片、声音）位于 `src/main/resources/` 目录
+#### 方法1：使用批处理文件（Windows）
+1. 双击 `start_sedentary_reminder.bat` 文件
+2. 程序将在后台启动，终端会自动关闭
 
-## 注意事项
-- 请勿修改JAR文件内容
-- 如果您修改了源代码，请重新运行 `mvn clean package` 生成新的JAR文件
-- 如需自定义提醒声音，请替换 `resources/sounds/default_sound.wav` 文件
+#### 方法2：使用Maven命令
+1. 打开命令行终端
+2. 导航到项目根目录
+3. 执行以下命令：
+   ```
+   mvn exec:java@run-launcher
+   ```
 
-## 联系我们
-如有任何问题或建议，请随时联系开发团队。
+#### 方法3：直接运行JAR文件
+1. 确保已构建项目（`mvn package`）
+2. 导航到 `target` 目录
+3. 执行以下命令：
+   ```
+   java -jar sedentary-reminder-1.0-SNAPSHOT-jar-with-dependencies.jar
+   ```
+
+### 配置说明
+首次运行后，程序会在用户目录下创建配置文件 `sedentary_reminder_config.json`。您可以通过界面设置以下选项：
+- 提醒间隔时间
+- 提醒方式（弹窗、声音、闪烁）
+- 提醒内容
+- 开机自启动
+
+### 注意事项
+1. 确保您的系统已安装Java 11或更高版本
+2. 如需修改默认配置，请通过应用程序界面进行更改，不要直接编辑配置文件
+3. 如果程序无法启动，请检查Java和Maven是否正确安装并配置了环境变量
+
+## 联系方式
+如有任何问题或建议，请联系：
+- Email: yym888@zohomail.com
+- GitHub Issues: https://github.com/YuYIiMing/SedentaryReminderTool/issues

@@ -533,7 +533,7 @@ public class ConfigurableMainWindowController implements Initializable {
                 "- 弹窗持续时间：4秒\n" +
                 "- 同时启用声音和闪烁提示\n\n" +
                 "- 本软件为免费软件，不包含任何广告\n" +
-                "如有问题，请联系：微信号 yu404040";
+                "如有问题，请联系： yym888@zohomail.com";
         
         alert.setContentText(content);
         alert.getDialogPane().setPrefWidth(400);
