@@ -227,6 +227,17 @@ public class ConfigurableMainWindowController implements Initializable {
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 config.clearReminderRecords();
+                
+                // 立即保存清空后的状态到文件
+                try {
+                    config.saveReminderRecords();
+                    System.out.println("提醒记录已清空并保存到文件");
+                } catch (Exception e) {
+                    System.err.println("保存清空后的提醒记录失败：" + e.getMessage());
+                    e.printStackTrace();
+                }
+                
+                // 刷新表格显示
                 refreshReminderRecordsTable();
                 
                 Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -434,6 +445,26 @@ public class ConfigurableMainWindowController implements Initializable {
         
         System.out.println("提醒触发：" + reminderText);
         
+        // 在提醒触发时创建并保存记录
+        if (currentReminderStartTime != null) {
+            LocalDateTime endTime = LocalDateTime.now();
+            ReminderRecord record = new ReminderRecord(currentReminderStartTime, endTime);
+            config.addReminderRecord(record);
+            System.out.println("提醒记录已添加：" + record.getStartTimeString() + " - " + record.getEndTimeString());
+            
+            // 立即保存记录到文件，避免数据丢失
+            try {
+                config.saveReminderRecords();
+                System.out.println("提醒记录已保存到文件");
+            } catch (Exception e) {
+                System.err.println("保存提醒记录失败：" + e.getMessage());
+                e.printStackTrace();
+            }
+            
+            // 刷新表格显示
+            refreshReminderRecordsTable();
+        }
+        
         // 显示弹窗
         if (popupEnabled) {
             int duration = config.getPopupDuration();
@@ -473,6 +504,15 @@ public class ConfigurableMainWindowController implements Initializable {
             ReminderRecord record = new ReminderRecord(currentReminderStartTime, endTime);
             config.addReminderRecord(record);
             currentReminderStartTime = null;
+            
+            // 立即保存记录到文件
+            try {
+                config.saveReminderRecords();
+                System.out.println("提醒记录已在停止时保存到文件");
+            } catch (Exception e) {
+                System.err.println("保存提醒记录失败：" + e.getMessage());
+                e.printStackTrace();
+            }
             
             // 添加记录后刷新表格显示
             refreshReminderRecordsTable();

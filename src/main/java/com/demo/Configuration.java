@@ -178,14 +178,34 @@ public class Configuration {
             Path configDirPath = Paths.get(CONFIG_DIR);
             if (!Files.exists(configDirPath)) {
                 Files.createDirectories(configDirPath);
+                System.out.println("配置目录已创建：" + CONFIG_DIR);
             }
             
-            // 将提醒记录保存到文件
+            // 将提醒记录保存到文件（即使为空）
+            String recordsFilePath = CONFIG_DIR + File.separator + "reminder_records.dat";
+            
+            // 检查记录列表是否为空
+            if (reminderRecords == null || reminderRecords.isEmpty()) {
+                // 如果记录为空，删除现有文件或创建一个空文件来表示清空状态
+                File recordsFile = new File(recordsFilePath);
+                if (recordsFile.exists()) {
+                    recordsFile.delete();
+                    System.out.println("提醒记录文件已删除（因为记录为空）");
+                } else {
+                    // 创建一个新的空文件
+                    recordsFile.createNewFile();
+                    System.out.println("已创建空的提醒记录文件");
+                }
+                return;
+            }
+            
             try (ObjectOutputStream oos = new ObjectOutputStream(
-                    new FileOutputStream(CONFIG_DIR + "/reminder_records.dat"))) {
+                    new FileOutputStream(recordsFilePath))) {
                 oos.writeObject(reminderRecords);
+                System.out.println("提醒记录保存成功，共" + reminderRecords.size() + "条记录，文件路径：" + recordsFilePath);
             }
         } catch (IOException e) {
+            System.err.println("保存提醒记录失败：" + e.getMessage());
             e.printStackTrace();
         }
     }
