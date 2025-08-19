@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ConfigurableMainWindowController" minWidth="900" minHeight="700">
+    <stylesheets>
+        <URL value="@/css/application.css" />
+    </stylesheets>
+    
+    <top>
+        <VBox alignment="CENTER" style="-fx-padding: 15;" styleClass="fade-in">
+            <Label text="久坐小管家" styleClass="title-label"></Label>
+            <Label text="健康久坐，定期活动" styleClass="subtitle-label"></Label>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox fillWidth="true" VBox.vgrow="ALWAYS">
+            <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="fade-in tab-pane" style="-fx-padding: 0 20 20 20;" VBox.vgrow="ALWAYS">
+            <Tab text="基础设置" styleClass="tab">
+                <VBox spacing="25" style="-fx-padding: 40 20 20 20;" styleClass="spacing-medium fade-in">
+                    <!-- 主内容居中区域 -->
+                    <VBox alignment="CENTER" spacing="25" style="-fx-pref-width: 100%;">
+                        <!-- 提醒间隔设置 -->
+                        <HBox spacing="15" alignment="CENTER" styleClass="card" style="-fx-padding: 25; -fx-pref-width: 700;">
+                            <Label text="提醒间隔：" minWidth="120" styleClass="control-label" />
+                            <Slider fx:id="intervalSlider" min="1" max="300" value="30" prefWidth="400" styleClass="slider" />
+                            <Label fx:id="intervalLabel" text="30 分钟" minWidth="100" alignment="CENTER_RIGHT" />
+                        </HBox>
+                      
+                    
+                        <!-- 倒计时显示 -->
+                        <HBox spacing="10" alignment="CENTER" styleClass="card highlight-card" style="-fx-padding: 30; -fx-pref-width: 700;">
+                            <Label fx:id="countdownLabel" text="距离下次提醒还有：未开始" styleClass="countdown-label" />
+                        </HBox>
+                    
+                        <!-- 按钮区域 -->
+                        <HBox spacing="20" alignment="CENTER" styleClass="spacing-large">
+                            <Button fx:id="startButton" text="开始提醒" prefWidth="120" styleClass="success-button" />
+                            <Button fx:id="stopButton" text="停止提醒" prefWidth="120" styleClass="accent-button" />
+                            <Button fx:id="testReminderButton" text="测试提醒" prefWidth="120" styleClass="secondary-button" />
+                            <Button fx:id="aboutButton" text="关于" prefWidth="100" styleClass="secondary-button" />
+                        </HBox>
+                    </VBox>
+                </VBox>
+              </Tab>
+            
+            <Tab text="高级设置" styleClass="tab">
+                <VBox fillWidth="true">
+                    <HBox alignment="CENTER_RIGHT" style="-fx-padding: 20 20 0 0;">
+                        <Button fx:id="saveConfigButton" text="保存配置" prefWidth="120" styleClass="accent-button" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane">
+                        <VBox spacing="15" style="-fx-padding: 20;" styleClass="spacing-medium fade-in">
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="提醒文案：" minWidth="100" styleClass="control-label" />
+                        <TextArea fx:id="reminderTextArea" prefRowCount="3" prefWidth="300" wrapText="true" styleClass="text-area" />
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="提示音文件：" minWidth="100" styleClass="control-label" />
+                        <TextField fx:id="soundFilePath" editable="false" prefWidth="200" styleClass="text-field" />
+                        <Button fx:id="browseSoundButton" text="浏览" prefWidth="80" styleClass="secondary-button" />
+                        <Button fx:id="restoreDefaultSoundButton" text="恢复默认" prefWidth="100" styleClass="secondary-button" />
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="启用弹窗：" minWidth="100" styleClass="control-label" />
+                        <CheckBox fx:id="popupCheckBox" selected="true" styleClass="check-box" />
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="启用声音：" minWidth="100" styleClass="control-label" />
+                        <CheckBox fx:id="soundCheckBox" selected="true" styleClass="check-box" />
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="启用闪烁：" minWidth="100" styleClass="control-label" />
+                        <CheckBox fx:id="flashCheckBox" selected="true" styleClass="check-box" />
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="弹窗持续时间（秒）：" minWidth="150" styleClass="control-label" />
+                        <Slider fx:id="popupDurationSlider" min="3" max="5" value="4" blockIncrement="1" majorTickUnit="1" showTickLabels="true" showTickMarks="true" prefWidth="200" styleClass="slider" />
+                        <Label fx:id="popupDurationLabel" text="4" minWidth="40" alignment="CENTER_RIGHT" />
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="弹窗颜色：" minWidth="100" styleClass="control-label" />
+                        <ChoiceBox fx:id="popupColorChoiceBox" prefWidth="150" styleClass="combo-box">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="蓝色" />
+                                    <String fx:value="绿色" />
+                                    <String fx:value="红色" />
+                                    <String fx:value="黄色" />
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="align-left card" style="-fx-padding: 20;">
+                        <Label text="闪烁次数：" minWidth="100" styleClass="control-label" />
+                        <Slider fx:id="flashCountSlider" min="3" max="5" value="4" blockIncrement="1" majorTickUnit="1" showTickLabels="true" showTickMarks="true" prefWidth="200" styleClass="slider" />
+                        <Label fx:id="flashCountLabel" text="4" minWidth="40" alignment="CENTER_RIGHT" />
+                    </HBox>
+                    
+                    </VBox>
+                </ScrollPane>
+                </VBox>
+            </Tab>
+        
+            <!-- 新增第三个标签页：提醒记录 -->
+            <Tab text="提醒记录" styleClass="tab">
+                <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane">
+                    <VBox spacing="15" style="-fx-padding: 20;" styleClass="spacing-medium fade-in">
+                        <Label text="提醒记录列表" styleClass="section-title" />
+                        <TableView fx:id="reminderRecordsTable" prefHeight="400" styleClass="table-view">
+                            <columns>
+                                <TableColumn text="开始时间" prefWidth="150">
+                                    <cellValueFactory><PropertyValueFactory property="startTimeDisplay"/></cellValueFactory>
+                                </TableColumn>
+                                <TableColumn text="结束时间" prefWidth="150">
+                                    <cellValueFactory><PropertyValueFactory property="endTimeDisplay"/></cellValueFactory>
+                                </TableColumn>
+                                <TableColumn text="持续时长" prefWidth="100">
+                                    <cellValueFactory><PropertyValueFactory property="durationDisplay"/></cellValueFactory>
+                                </TableColumn>
+                            </columns>
+                        </TableView>
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Button fx:id="clearRecordsButton" text="清空记录" styleClass="secondary-button" />
+                        </HBox>
+                    </VBox>
+                </ScrollPane>
+            </Tab>
+        </TabPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- 背景 -->
+  <circle cx="64" cy="64" r="60" fill="#4a6fa5"/>
+  
+  <!-- 人形图标 -->
+  <g fill="white">
+    <!-- 头部 -->
+    <circle cx="64" cy="32" r="12"/>
+    
+    <!-- 身体 -->
+    <path d="M64,44 L64,76" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- 手臂 -->
+    <path d="M64,52 L40,48" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <path d="M64,52 L88,48" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- 腿部 -->
+    <path d="M64,76 L52,100" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <path d="M64,76 L76,100" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- 活动提醒标记 -->
+    <path d="M90,24 L110,24 L110,12 L90,12 Z"/>
+    <path d="M90,36 L110,36 L110,24 L90,24 Z"/>
+    <path d="M90,48 L110,48 L110,36 L90,36 Z"/>
+  </g>
+</svg>
